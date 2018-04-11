@@ -6,9 +6,7 @@
 
 ## About this Repo
 
-This is the Git repo of the official Docker image for [YOURLS](https://registry.hub.docker.com/r/yourls/docker/).
-See the Hub page for the full readme on how to use the Docker image and for information
-regarding contributing and issues.
+这是官方维护的镜像的 fork [YOURLS](https://registry.hub.docker.com/r/yourls/docker/).
 
 ---
 
@@ -17,26 +15,31 @@ regarding contributing and issues.
 
 # What is YOURLS?
 
-YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener. You'll have full control over your data, detailed stats, analytics, plugins, and more. It's free.
+YOURLS 是由PHP写成的域名缩短服务。
 
 ![logo](https://raw.githubusercontent.com/YOURLS/YOURLS/master/images/yourls-logo.png)
 
-# How to use this image
+# 如何使用镜像
 
 ```console
 $ docker run --name some-yourls --link some-mysql:mysql -d yourls
 ```
 
-The following environment variables are also honored for configuring your YOURLS instance:
+镜像包含如下的环境变量：
 
--	`-e YOURLS_DB_HOST=...` (defaults to the IP and port of the linked `mysql` container)
--	`-e YOURLS_DB_USER=...` (defaults to "root")
--	`-e YOURLS_DB_PASS=...` (defaults to the value of the `MYSQL_ROOT_PASSWORD` environment variable from the linked `mysql` container)
--	`-e YOURLS_DB_NAME=...` (defaults to "yourls")
--	`-e YOURLS_TABLE_PREFIX=...` (defaults to "", only set this when you need to override the default table prefix in wp-config.php)
--	`-e YOURLS_COOKIEKEY=...` (default to unique random SHA1s)
+- `-e YOURLS_DB_HOST=...` 指向数据库的ip和端口
+- `-e YOURLS_DB_USER=...` 默认为 "root"
+- `-e YOURLS_DB_PASS=...` 需要和mysql数据容器的 `MYSQL_ROOT_PASSWORD` 变量一致
+- `-e YOURLS_DB_NAME=...` 默认为 "yourls"
+- `-e YOURLS_TABLE_PREFIX=...` 默认为空 "", 只有当你需要覆盖 `wp-config.php` 中默认的前缀时使用
+- `-e YOURLS_COOKIEKEY=...` (default to unique random SHA1s)
+- `-e YOURLS_URL_CONVERT=...` 62 包含大小写
+- `-e YOURLS_HOURS_OFFSET` 时区 +8
+- `-e YOURLS_SITE` 域名，需要包含 http 或者 https
+- `-e YOURLS_USER` 管理员名字
+- `-e YOURLS_PASS` 管理员密码
 
-If the `YOURLS_DB_NAME` specified does not already exist on the given MySQL server, it will be created automatically upon startup of the `yourls` container, provided that the `YOURLS_DB_USER` specified has the necessary permissions to create it.
+如果 `YOURLS_DB_NAME` 中指定的数据库，在 MySQL 容器中不存在会创建
 
 If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
 
