@@ -93,6 +93,14 @@ The following Docker Hub features can help with the task of keeping your depende
 -	[Automated Builds](https://docs.docker.com/docker-hub/builds/) let Docker Hub automatically build your Dockerfile each time you push changes to it.
 -	[Repository Links](https://docs.docker.com/docker-hub/builds/#repository-links) can ensure that your image is also rebuilt any time `yourls` is updated.
 
+# 备份脚本
+备份数据库和文件内容
+
+    docker exec yourls_db /usr/bin/mysqldump -u root --password=root yourls > yourls_db.sql
+
+    docker run --rm --volume docker-yourls_yourls_data:/temp_data --volume $(pwd):/temp_backup alpine tar cfv /temp_backup/yourls_files.tar /temp_data
+
+
 # Image Variants
 
 The `yourls` images come in many flavors, each designed for a specific use case.
